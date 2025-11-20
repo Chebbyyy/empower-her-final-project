@@ -92,7 +92,7 @@ Before running this project, ensure you have the following installed:
    Create a `.env` file in the `backend` directory with the following variables:
    ```env
    MONGO_URI=mongodb://localhost:27017/empowerher
-   # Or for MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/empowerher
+   # Or for MongoDB Atlas:YOUR_CONNECTION_STRING
    JWT_SECRET=your_super_secret_jwt_key_here
    PORT=5000
    ```
@@ -270,3 +270,4 @@ If you have any questions or need help, please:
 ---
 
 *EmpowerHer - Celebrating diversity, fostering innovation, and building a world where every woman can lead with confidence.*
+
