@@ -6,6 +6,11 @@ EmpowerHer is a vibrant full-stack web platform dedicated to advancing gender eq
 
 The platform celebrates diversity, fosters innovation, and builds a supportive community where every woman can lead with confidence. It offers curated resources for skill development, career growth, health and wellness information, community forums, networking opportunities, educational content, mentorship programs, and events focused on empowerment.
 
+## Live Demo
+
+- **Frontend**: [https://empower-her-final-project-npn9.vercel.app/](https://empower-her-final-project-npn9.vercel.app/)
+- **Backend API**: [https://empower-her-final-project.onrender.com/](https://empower-her-final-project.onrender.com/)
+
 ## Features
 
 ### Core Functionality
