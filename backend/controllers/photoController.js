@@ -3,24 +3,20 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Configure multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadDir = path.join(__dirname, '../uploads/photos');
-    // Create directory if it doesn't exist
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
     cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    // Generate unique filename
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
     cb(null, 'photo-' + uniqueSuffix + path.extname(file.originalname));
-  }
+  },
 });
 
-// File filter
 const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image/')) {
     cb(null, true);
@@ -30,14 +26,34 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-  storage: storage,
-  fileFilter: fileFilter,
-  limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB limit
-  }
+  storage,
+  fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-// Upload photo
+function publicPhotoUrl(req, filename) {
+  if (process.env.PUBLIC_BASE_URL) {
+    return `${process.env.PUBLIC_BASE_URL.replace(/\/$/, '')}/uploads/photos/${filename}`;
+  }
+  // Relative path works with the Vite /uploads proxy in development
+  return `/uploads/photos/${filename}`;
+}
+
+function mapPhoto(req, photo) {
+  const uploader = photo.uploadedBy;
+  return {
+    id: photo._id,
+    filename: photo.filename,
+    caption: photo.caption,
+    uploadedBy: typeof uploader === 'object' && uploader?.name ? uploader.name : undefined,
+    uploadedAt: photo.createdAt,
+    isApproved: photo.isApproved,
+    url: publicPhotoUrl(req, photo.filename),
+  };
+}
+
+exports.upload = upload;
+
 exports.uploadPhoto = async (req, res) => {
   try {
     if (!req.file) {
@@ -51,19 +67,16 @@ exports.uploadPhoto = async (req, res) => {
       size: req.file.size,
       path: req.file.path,
       caption: req.body.caption || '',
-      uploadedBy: req.user.id
+      uploadedBy: req.user._id || req.user.id,
+      isApproved: false,
     });
 
     await photo.save();
+    await photo.populate('uploadedBy', 'name');
 
     res.status(201).json({
       message: 'Photo uploaded successfully',
-      photo: {
-        id: photo._id,
-        filename: photo.filename,
-        caption: photo.caption,
-        uploadedAt: photo.createdAt
-      }
+      photo: mapPhoto(req, photo),
     });
   } catch (error) {
     console.error('Upload error:', error);
@@ -71,55 +84,31 @@ exports.uploadPhoto = async (req, res) => {
   }
 };
 
-// Export multer upload middleware
-exports.upload = upload;
-
-// Get all approved photos
 exports.getPhotos = async (req, res) => {
   try {
     const photos = await Photo.find({ isApproved: true })
       .populate('uploadedBy', 'name')
       .sort({ createdAt: -1 });
 
-    const photosWithUrls = photos.map(photo => ({
-      id: photo._id,
-      filename: photo.filename,
-      caption: photo.caption,
-      uploadedBy: photo.uploadedBy.name,
-      uploadedAt: photo.createdAt,
-      url: `/uploads/photos/${photo.filename}`
-    }));
-
-    res.json(photosWithUrls);
+    res.json(photos.map((photo) => mapPhoto(req, photo)));
   } catch (error) {
     console.error('Get photos error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
 
-// Get user's own photos
 exports.getUserPhotos = async (req, res) => {
   try {
-    const photos = await Photo.find({ uploadedBy: req.user.id })
-      .sort({ createdAt: -1 });
+    const userId = req.user._id || req.user.id;
+    const photos = await Photo.find({ uploadedBy: userId }).sort({ createdAt: -1 });
 
-    const photosWithUrls = photos.map(photo => ({
-      id: photo._id,
-      filename: photo.filename,
-      caption: photo.caption,
-      isApproved: photo.isApproved,
-      uploadedAt: photo.createdAt,
-      url: `/uploads/photos/${photo.filename}`
-    }));
-
-    res.json(photosWithUrls);
+    res.json(photos.map((photo) => mapPhoto(req, photo)));
   } catch (error) {
     console.error('Get user photos error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
 
-// Delete photo
 exports.deletePhoto = async (req, res) => {
   try {
     const photo = await Photo.findById(req.params.id);
@@ -128,12 +117,11 @@ exports.deletePhoto = async (req, res) => {
       return res.status(404).json({ message: 'Photo not found' });
     }
 
-    // Check if user owns the photo
-    if (photo.uploadedBy.toString() !== req.user.id) {
+    const userId = String(req.user._id || req.user.id);
+    if (photo.uploadedBy.toString() !== userId) {
       return res.status(403).json({ message: 'Not authorized' });
     }
 
-    // Delete file from filesystem
     if (fs.existsSync(photo.path)) {
       fs.unlinkSync(photo.path);
     }

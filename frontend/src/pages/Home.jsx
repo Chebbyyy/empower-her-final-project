@@ -1,285 +1,280 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 
-const testimonials = [
+const HERO_IMAGE =
+  'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=2000&q=80';
+
+const focusAreas = [
   {
-    id: 1,
-    name: "Sarah Johnson",
-    role: "Entrepreneur",
-    content: "EmpowerHer gave me the confidence and resources I needed to start my own business. The community support is incredible!",
-    avatar: "SJ"
+    title: 'Education & skills',
+    body: 'Curated learning paths and practical materials for career growth.',
   },
   {
-    id: 2,
-    name: "Maria Rodriguez",
-    role: "Software Engineer",
-    content: "The educational resources and mentorship programs helped me transition into tech. I'm now leading a team of developers!",
-    avatar: "MR"
+    title: 'Health & wellness',
+    body: 'Clear information and community support around physical and mental health.',
   },
   {
-    id: 3,
-    name: "Aisha Patel",
-    role: "Community Leader",
-    content: "This platform connected me with amazing women who share my vision. Together, we're creating real change in our communities.",
-    avatar: "AP"
+    title: 'Economic opportunity',
+    body: 'Tools and networks that help women build financial independence.',
   },
   {
-    id: 4,
-    name: "Emma Thompson",
-    role: "Healthcare Professional",
-    content: "The wellness resources and support network have been transformative. I feel empowered in every aspect of my life.",
-    avatar: "ET"
-  }
+    title: 'Leadership',
+    body: 'Mentorship and programs that prepare women to lead with clarity.',
+  },
 ];
 
-function TestimonialsCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const nextTestimonial = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
-  };
-
-  return (
-    <div className="relative max-w-4xl mx-auto">
-      <div className="overflow-hidden rounded-2xl bg-gradient-to-r from-primary-50 to-secondary-50 p-8 shadow-xl">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-            className="text-center"
-          >
-            <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4">
-              {testimonials[currentIndex].avatar}
-            </div>
-            <blockquote className="text-lg text-gray-700 mb-6 italic">
-              "{testimonials[currentIndex].content}"
-            </blockquote>
-            <div>
-              <h4 className="font-semibold text-primary-700">{testimonials[currentIndex].name}</h4>
-              <p className="text-sm text-gray-600">{testimonials[currentIndex].role}</p>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Navigation buttons */}
-      <button
-        onClick={prevTestimonial}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-3 shadow-lg transition-all duration-300"
-      >
-        <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        onClick={nextTestimonial}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-3 shadow-lg transition-all duration-300"
-      >
-        <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-
-      {/* Dots indicator */}
-      <div className="flex justify-center mt-6 space-x-2">
-        {testimonials.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentIndex
-                ? 'bg-primary-600 scale-125'
-                : 'bg-gray-300 hover:bg-primary-300'
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
+const featured = [
+  {
+    name: 'Michelle Obama',
+    role: 'Girls’ education advocate',
+    image: '/images/Michelle Obama.jpg',
+  },
+  {
+    name: 'Malala Yousafzai',
+    role: 'Education activist',
+    image: '/images/Malala.jpg',
+  },
+  {
+    name: 'Graça Machel',
+    role: 'Rights & policy leader',
+    image: '/images/Graca.jpg',
+  },
+  {
+    name: 'Purity Kagwiria',
+    role: 'Young women’s mentorship',
+    image: '/images/purity.jpg',
+  },
+];
 
 function HomePage() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 }
-    }
-  };
-
-  const keyAreas = [
-      { title: "Education and Skill Development", color: "from-blue-500 to-purple-600", icon: "EDU" },
-      { title: "Health and Wellness", color: "from-green-500 to-teal-600", icon: "HLTH" },
-      { title: "Economic Empowerment", color: "from-yellow-500 to-orange-600", icon: "ECON" },
-      { title: "Community Support", color: "from-pink-500 to-red-600", icon: "COMM" },
-      { title: "Leadership Development", color: "from-indigo-500 to-blue-600", icon: "LEAD" },
-    ];
+  const { isAuthenticated } = useAuth();
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="text-center"
-    >
-      <motion.div variants={itemVariants}>
-        <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
-          Welcome to Empower Her
-        </h1>
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-          A vibrant platform dedicated to women's empowerment and gender equality, celebrating diversity and strength.
-        </p>
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="inline-block"
-        >
-          <Link
-            to="/register"
-            className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-3 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            Join Our Community
-          </Link>
-        </motion.div>
-      </motion.div>
-
-      <motion.section variants={itemVariants} className="mb-12 mt-12">
-        <h2 className="text-4xl font-semibold bg-gradient-to-r from-empower-purple to-secondary-600 bg-clip-text text-transparent mb-6">
-          Our Mission
-        </h2>
-        <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-          To provide resources, support, and community for women striving for equality and empowerment in all aspects of life.
-          We believe in creating a world where every woman can thrive, innovate, and lead.
-        </p>
-      </motion.section>
-
-      <motion.section variants={itemVariants} className="mb-12">
-        <h2 className="text-4xl font-semibold bg-gradient-to-r from-empower-green to-accent-600 bg-clip-text text-transparent mb-8">
-          Key Areas of Focus
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {keyAreas.map((area, index) => (
-            <motion.div
-              key={area.title}
-              variants={itemVariants}
-              whileHover={{ scale: 1.05, rotateY: 5 }}
-              className={`bg-gradient-to-br ${area.color} p-6 rounded-xl shadow-lg text-white cursor-pointer`}
-            >
-              <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center text-white font-bold text-sm mb-3">
-                {area.icon}
-              </div>
-              <h3 className="text-xl font-semibold mb-2">{area.title}</h3>
-              <p className="text-sm opacity-90">Empowering women through comprehensive support and resources.</p>
-            </motion.div>
-          ))}
+    <div>
+      {/* Full-bleed hero */}
+      <section className="relative min-h-[100svh] flex items-end overflow-hidden">
+        <img
+          src={HERO_IMAGE}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/45 to-ink/25" />
+        <div className="relative section-wrap w-full pb-16 pt-32 md:pb-24 md:pt-40 animate-[fadeIn_0.8s_ease-out]">
+          <h1 className="text-5xl text-paper sm:text-6xl md:text-7xl lg:text-8xl max-w-3xl">
+            Empower Her
+          </h1>
+          <p className="mt-5 max-w-xl text-lg text-paper/85 leading-relaxed md:text-xl">
+            Education, health, opportunity, and community — built for women advancing equality.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4">
+            {isAuthenticated ? (
+              <>
+                <Link to="/dashboard" className="btn-brass">
+                  Go to dashboard
+                </Link>
+                <Link to="/library" className="btn-ghost">
+                  Explore library
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/register" className="btn-brass">
+                  Join the community
+                </Link>
+                <Link to="/resources" className="btn-ghost">
+                  Explore resources
+                </Link>
+              </>
+            )}
+          </div>
         </div>
-      </motion.section>
+      </section>
 
-      <motion.section variants={itemVariants} className="mb-12">
-        <h2 className="text-4xl font-semibold bg-gradient-to-r from-yellow-600 to-pink-600 bg-clip-text text-transparent mb-8">
-          What Women Are Saying
-        </h2>
-        <TestimonialsCarousel />
-      </motion.section>
+      {/* Mission */}
+      <section className="page-section border-b border-line">
+        <div className="section-wrap max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brass mb-4">
+            Mission
+          </p>
+          <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
+            A platform aligned with gender equality, not slogans.
+          </h2>
+          <p className="mt-6 font-inter text-lg text-ink-muted leading-relaxed">
+            EmpowerHer supports UN Sustainable Development Goal 5 by connecting women with
+            practical resources, mentorship, and peer networks — so progress is shared, not
+            solitary.
+          </p>
+        </div>
+      </section>
 
-      <motion.section variants={itemVariants} className="mb-12">
-        <h2 className="text-4xl font-semibold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-8 text-center">
-          Featured Women
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-          {[
-            { name: "Michelle Obama", role: "Girls’ education advocate", image: "/images/Michelle Obama.jpg" },
-            { name: "Malala Yousafzai", role: "Girls’ rights & education activist", image: "/images/Malala.jpg" },
-            { name: "Graça Machel", role: "Women & children’s rights leader", image: "/images/Graca.jpg" },
-            { name: "Purity Kagwiria", role: "Young women’s leadership mentor", image: "/images/purity.jpg" }
-          ].map((woman, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="text-center"
-            >
-              <div className="relative mb-4">
-                <img
-                  src={woman.image}
-                  alt={woman.name}
-                  className="w-32 h-32 rounded-full mx-auto object-cover shadow-lg border-4 border-white"
-                />
-                <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">★</span>
+      {/* Focus areas */}
+      <section className="page-section border-b border-line">
+        <div className="section-wrap">
+          <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight mb-12">
+            Where we focus
+          </h2>
+          <ul className="grid gap-10 sm:grid-cols-2">
+            {focusAreas.map((area) => (
+              <li key={area.title} className="border-t border-line pt-6">
+                <h3 className="font-display text-xl text-ink">{area.title}</h3>
+                <p className="mt-3 text-ink-muted leading-relaxed">{area.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Quote */}
+      <section className="page-section border-b border-line bg-paper-dark/40">
+        <div className="section-wrap max-w-3xl">
+          <blockquote className="font-editorial text-2xl text-forest leading-snug italic md:text-3xl">
+            “We need to reshape our own perception of how we view ourselves. We have to step up
+            as women and take the lead.”
+          </blockquote>
+          <p className="mt-6 text-sm text-ink-muted">— Beyoncé Knowles-Carter</p>
+        </div>
+      </section>
+
+      {/* Featured */}
+      <section className="page-section border-b border-line">
+        <div className="section-wrap">
+          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
+              Voices that lead
+            </h2>
+            <Link to="/gallery" className="link-brass text-sm font-medium">
+              View the gallery
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
+            {featured.map((person) => (
+              <figure key={person.name} className="group">
+                <div className="overflow-hidden">
+                  <img
+                    src={encodeURI(person.image)}
+                    alt={person.name}
+                    className="aspect-[3/4] w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
                 </div>
-              </div>
-              <h3 className="font-semibold text-gray-800 mb-1">{woman.name}</h3>
-              <p className="text-sm text-gray-600">{woman.role}</p>
-            </motion.div>
-          ))}
+                <figcaption className="mt-3">
+                  <p className="font-medium text-ink">{person.name}</p>
+                  <p className="text-sm text-ink-muted">{person.role}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
-        <div className="text-center mt-8">
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              to="/gallery"
-              className="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              View Women's inspiration gallery →
-            </Link>
-          </motion.div>
-        </div>
-      </motion.section>
+      </section>
 
-      <motion.section variants={itemVariants} className="mb-8">
-        <h2 className="text-4xl font-semibold bg-gradient-to-r from-empower-gold to-empower-pink bg-clip-text text-transparent mb-6">
-          Start Your Journey
-        </h2>
-        <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-          Explore resources, connect with inspiring women, and take steps towards empowerment.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              to="/resources"
-              className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300"
-            >
-              Explore Resources
-            </Link>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              to="/about"
-              className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300"
-            >
-              Learn More
-            </Link>
-          </motion.div>
+      {/* Library teaser */}
+      <section className="page-section border-b border-line bg-forest text-paper campaign-hero">
+        <div className="section-wrap flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brass mb-4">
+              Women&apos;s Library
+            </p>
+            <h2 className="font-campaign text-3xl md:text-4xl">
+              Read what great women wrote
+            </h2>
+            <p className="mt-4 text-paper/80 leading-relaxed campaign-body">
+              Browse books and journals with summaries, quotes, and links — memoirs, activism,
+              leadership, and more.
+            </p>
+          </div>
+          <Link to="/library" className="btn-brass shrink-0">
+            Explore library
+          </Link>
         </div>
-      </motion.section>
-    </motion.div>
+      </section>
+
+      {/* Events teaser */}
+      <section className="page-section border-b border-line">
+        <div className="section-wrap flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brass mb-4">
+              Events &amp; workshops
+            </p>
+            <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
+              Learn and connect in person or online
+            </h2>
+            <p className="mt-4 text-ink-muted leading-relaxed">
+              Workshops, webinars, panels, and meetups — RSVP to save your spot.
+            </p>
+          </div>
+          <Link to="/events" className="btn-primary shrink-0">
+            View events
+          </Link>
+        </div>
+      </section>
+
+      {/* Mentorship teaser */}
+      <section className="page-section border-b border-line bg-paper-dark/40">
+        <div className="section-wrap flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brass mb-4">
+              Mentorship
+            </p>
+            <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
+              Find a mentor — or become one
+            </h2>
+            <p className="mt-4 text-ink-muted leading-relaxed">
+              Connect with women who share your interests in career, leadership, and community.
+            </p>
+          </div>
+          <Link to="/mentorship" className="btn-outline shrink-0">
+            Explore mentorship
+          </Link>
+        </div>
+      </section>
+
+      {/* Community teaser */}
+      <section className="page-section border-b border-line">
+        <div className="section-wrap flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brass mb-4">
+              Community
+            </p>
+            <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
+              Join the conversation
+            </h2>
+            <p className="mt-4 text-ink-muted leading-relaxed">
+              Share stories, ask questions, and support other women in the EmpowerHer community.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/community" className="btn-primary shrink-0">
+              Open community
+            </Link>
+            <Link to="/search" className="btn-outline shrink-0">
+              Search the site
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Closing CTA */}
+      <section className="page-section">
+        <div className="section-wrap flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-xl">
+            <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
+              Find your next step
+            </h2>
+            <p className="mt-4 text-ink-muted leading-relaxed">
+              Browse curated resources or learn how EmpowerHer works — then join when you are ready.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/resources" className="btn-primary">
+              Browse resources
+            </Link>
+            <Link to="/about" className="btn-outline">
+              About the project
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
 

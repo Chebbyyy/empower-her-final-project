@@ -1,7 +1,19 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { register as apiRegister, login as apiLogin, logout as apiLogout, getCurrentUser } from '../utils/api.js';
+import {
+  register as apiRegister,
+  login as apiLogin,
+  logout as apiLogout,
+  getCurrentUser,
+  updateProfile as apiUpdateProfile,
+} from '../utils/api.js';
 
 const AuthContext = createContext();
+
+const stripToken = (data) => {
+  if (!data || typeof data !== 'object') return data;
+  const { token, ...user } = data;
+  return user;
+};
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -21,9 +33,9 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         try {
           const userData = await getCurrentUser();
-          setUser(userData);
-        } catch (error) {
-          localStorage.removeItem('token');
+          setUser(stripToken(userData));
+        } catch {
+          apiLogout();
         }
       }
       setLoading(false);
@@ -33,28 +45,28 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const register = async (userData) => {
-    try {
-      const user = await apiRegister(userData);
-      setUser(user);
-      return user;
-    } catch (error) {
-      throw error;
-    }
+    const data = await apiRegister(userData);
+    const user = stripToken(data);
+    setUser(user);
+    return user;
   };
 
   const login = async (credentials) => {
-    try {
-      const user = await apiLogin(credentials);
-      setUser(user);
-      return user;
-    } catch (error) {
-      throw error;
-    }
+    const data = await apiLogin(credentials);
+    const user = stripToken(data);
+    setUser(user);
+    return user;
   };
 
   const logout = () => {
     apiLogout();
     setUser(null);
+  };
+
+  const updateUser = async (userData) => {
+    const updated = await apiUpdateProfile(userData);
+    setUser(stripToken(updated));
+    return updated;
   };
 
   const value = {
@@ -63,12 +75,9 @@ export const AuthProvider = ({ children }) => {
     register,
     login,
     logout,
-    isAuthenticated: !!user
+    updateUser,
+    isAuthenticated: !!user,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
