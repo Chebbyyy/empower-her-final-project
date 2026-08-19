@@ -10,7 +10,7 @@ function AppShell() {
         Skip to content
       </a>
       <SiteHeader />
-      <main id="main-content" className="flex-1" tabIndex={-1}>
+      <main id="main-content" className="flex-1 pt-20" tabIndex={-1}>
         <div className="section-wrap page-section">
           <Outlet />
         </div>
