@@ -9,7 +9,10 @@ function SiteFooter() {
     <footer className="border-t border-line bg-forest text-paper">
       <div className="section-wrap py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-1">
-          <p className="font-wordmark text-3xl">Empower Her</p>
+          <Link to="/" className="inline-flex items-center gap-3 text-paper">
+            <img src="/logo.svg" alt="" className="h-10 w-10" />
+            <p className="font-wordmark">Empower Her</p>
+          </Link>
           <p className="mt-2 max-w-sm text-sm text-paper/70 leading-relaxed">
             Resources, community, and opportunity for women advancing gender equality.
           </p>

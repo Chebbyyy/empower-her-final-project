@@ -28,38 +28,34 @@ const CardNav = ({
 
   const calculateHeight = () => {
     const navEl = navRef.current;
-    if (!navEl) return 260;
+    if (!navEl) return 380;
 
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    if (isMobile) {
-      const contentEl = navEl.querySelector('.card-nav-content');
-      if (contentEl) {
-        const wasVisible = contentEl.style.visibility;
-        const wasPointerEvents = contentEl.style.pointerEvents;
-        const wasPosition = contentEl.style.position;
-        const wasHeight = contentEl.style.height;
+    const contentEl = navEl.querySelector('.card-nav-content');
+    if (!contentEl) return 380;
 
-        contentEl.style.visibility = 'visible';
-        contentEl.style.pointerEvents = 'auto';
-        contentEl.style.position = 'static';
-        contentEl.style.height = 'auto';
+    const wasVisible = contentEl.style.visibility;
+    const wasPointerEvents = contentEl.style.pointerEvents;
+    const wasPosition = contentEl.style.position;
+    const wasHeight = contentEl.style.height;
 
-        contentEl.offsetHeight;
+    contentEl.style.visibility = 'visible';
+    contentEl.style.pointerEvents = 'auto';
+    contentEl.style.position = 'static';
+    contentEl.style.height = 'auto';
 
-        const topBar = 48;
-        const padding = 12;
-        const contentHeight = contentEl.scrollHeight;
-        const maxHeight = window.innerHeight - 24;
+    contentEl.offsetHeight;
 
-        contentEl.style.visibility = wasVisible;
-        contentEl.style.pointerEvents = wasPointerEvents;
-        contentEl.style.position = wasPosition;
-        contentEl.style.height = wasHeight;
+    const topBar = 48;
+    const padding = 28;
+    const contentHeight = contentEl.scrollHeight;
+    const maxHeight = window.innerHeight - 24;
 
-        return Math.min(topBar + contentHeight + padding, maxHeight);
-      }
-    }
-    return 280;
+    contentEl.style.visibility = wasVisible;
+    contentEl.style.pointerEvents = wasPointerEvents;
+    contentEl.style.position = wasPosition;
+    contentEl.style.height = wasHeight;
+
+    return Math.min(Math.max(topBar + contentHeight + padding, 360), maxHeight);
   };
 
   const createTimeline = () => {
@@ -217,15 +213,10 @@ const CardNav = ({
           </div>
 
           <div className="logo-container">
-            {logo ? (
-              <Link to="/" onClick={closeMenu}>
-                <img src={logo} alt={logoAlt} className="logo" />
-              </Link>
-            ) : (
-              <Link to="/" className="card-nav-wordmark" onClick={closeMenu}>
-                {logoAlt}
-              </Link>
-            )}
+            <Link to="/" className="card-nav-brand" onClick={closeMenu} aria-label={logoAlt}>
+              {logo ? <img src={logo} alt="" className="logo" /> : null}
+              <span className="card-nav-wordmark">{logoAlt}</span>
+            </Link>
           </div>
 
           <button

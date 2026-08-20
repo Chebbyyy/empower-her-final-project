@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import SiteHeader from './SiteHeader.jsx';
 import SiteFooter from './SiteFooter.jsx';
+import FadeInPage from './FadeInPage.jsx';
 
 function AppShell() {
   return (
@@ -12,7 +13,9 @@ function AppShell() {
       <SiteHeader />
       <main id="main-content" className="flex-1 pt-20" tabIndex={-1}>
         <div className="section-wrap page-section">
-          <Outlet />
+          <FadeInPage>
+            <Outlet />
+          </FadeInPage>
         </div>
       </main>
       <SiteFooter />

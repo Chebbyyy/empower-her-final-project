@@ -1,40 +1,50 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "Lasiera";
-  src: local("Lasiera"), local("Lasiera Script");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Poster Power";
-  src: local("Poster Power"), local("PosterPower");
-  font-display: swap;
-}
+/*
+  Design limits
+  Colors: forest, brass, plus grays (ink / paper / line). No purple gradients.
+  Type: Open Sans only. Two sizes — body and heading. Line-height 1.6.
+  Spacing: --space-* tokens. Vary padding; do not default to p-4 / gap-6.
+  Avoid: centered two-button heroes, drop shadows, glassmorphism.
+*/
 
 @theme {
   --color-ink: #1a1714;
   --color-ink-muted: #5c564e;
   --color-forest: #1b3a2f;
-  --color-forest-light: #2d5a48;
+  --color-forest-light: #1b3a2f;
   --color-paper: #f7f4ef;
   --color-paper-dark: #ebe6dc;
   --color-brass: #a67c52;
-  --color-brass-dark: #8b6540;
+  --color-brass-dark: #5c564e;
   --color-surface: #ffffff;
   --color-line: #d9d2c6;
 
   --font-sans: "Open Sans", system-ui, sans-serif;
-  --font-hero: "Bebas Neue", Impact, sans-serif;
-  --font-headline: "Montserrat", sans-serif;
-  --font-display: "Montserrat", sans-serif;
-  --font-wordmark: "Lasiera", "Lasiera Script", "Great Vibes", cursive;
-  --font-editorial: "Andada Pro", Georgia, serif;
-  --font-inter: "Inter", system-ui, sans-serif;
-  --font-statement: "Anton", sans-serif;
-  --font-support: "Lato", sans-serif;
-  --font-campaign: "Poster Power", "Lilita One", sans-serif;
-  --font-roboto: "Roboto", system-ui, sans-serif;
+  --font-hero: "Open Sans", system-ui, sans-serif;
+  --font-headline: "Open Sans", system-ui, sans-serif;
+  --font-display: "Open Sans", system-ui, sans-serif;
+  --font-wordmark: "Open Sans", system-ui, sans-serif;
+  --font-editorial: "Open Sans", system-ui, sans-serif;
+  --font-inter: "Open Sans", system-ui, sans-serif;
+  --font-statement: "Open Sans", system-ui, sans-serif;
+  --font-support: "Open Sans", system-ui, sans-serif;
+  --font-campaign: "Open Sans", system-ui, sans-serif;
+  --font-roboto: "Open Sans", system-ui, sans-serif;
+
+  --text-body: 1rem;
+  --text-heading: 1.75rem;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.75rem;
+  --space-8: 3.5rem;
+  --space-9: 4.5rem;
+  --space-10: 6rem;
 }
 
 @keyframes fadeIn {
@@ -57,6 +67,8 @@
   body {
     margin: 0;
     font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
     color: var(--color-ink);
     background-color: var(--color-paper);
     -webkit-font-smoothing: antialiased;
@@ -102,7 +114,7 @@
     color: var(--color-paper);
     font-family: var(--font-support);
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: var(--text-body);
     letter-spacing: 0.01em;
     border: 1px solid var(--color-forest);
     transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
@@ -127,7 +139,7 @@
     color: var(--color-paper);
     font-family: var(--font-support);
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: var(--text-body);
     border: 1px solid color-mix(in srgb, var(--color-paper) 55%, transparent);
     transition: background-color 0.2s ease, border-color 0.2s ease;
   }
@@ -146,7 +158,7 @@
     color: var(--color-paper);
     font-family: var(--font-support);
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: var(--text-body);
     border: 1px solid var(--color-brass);
     transition: background-color 0.2s ease;
   }
@@ -164,7 +176,7 @@
     color: var(--color-forest);
     font-family: var(--font-support);
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: var(--text-body);
     border: 1px solid var(--color-forest);
     transition: background-color 0.2s ease, color 0.2s ease;
   }
@@ -210,27 +222,28 @@
   }
 
   .page-section {
-    padding-block: 4rem;
+    padding-block: var(--space-8);
     scroll-margin-top: 5.25rem;
   }
 
   @media (min-width: 768px) {
     .page-section {
-      padding-block: 5.5rem;
+      padding-block: var(--space-10);
     }
   }
 
+  .page-section-tight {
+    padding-block: var(--space-6) var(--space-8);
+    scroll-margin-top: 5.25rem;
+  }
+
+  .page-section-roomy {
+    padding-block: var(--space-9) var(--space-10);
+    scroll-margin-top: 5.25rem;
+  }
+
   .library-spotlight {
-    background: linear-gradient(135deg, var(--color-forest) 0%, #2d5a48 50%, var(--color-brass-dark) 100%);
-  }
-
-  .library-card {
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  .library-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(26, 23, 20, 0.12);
+    background-color: var(--color-forest);
   }
 
   .filter-pill {
@@ -271,22 +284,9 @@
     animation: slideUp 0.4s ease-out forwards;
   }
 
-  .home-category-card {
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  .home-category-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(26, 23, 20, 0.1);
-  }
-
+  .home-category-card,
   .home-book-card {
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  .home-book-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 28px rgba(26, 23, 20, 0.12);
+    transition: border-color 0.25s ease;
   }
 
   .home-promo-banner {
@@ -312,7 +312,6 @@
     border-radius: 50%;
     overflow: hidden;
     border: 4px solid color-mix(in srgb, var(--color-paper) 25%, transparent);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
   }
 
   .home-showcase-pill-btn {
@@ -362,7 +361,7 @@
     background-color: var(--color-paper);
     padding: 0.6rem 1.2rem;
     border-radius: 999px;
-    box-shadow: 0 4px 20px rgba(26, 23, 20, 0.12);
+    border: 1px solid var(--color-line);
   }
 
   .home-showcase-collection {
@@ -422,12 +421,11 @@
     border: 1px solid var(--color-line);
     border-radius: 8px;
     overflow: hidden;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    transition: border-color 0.25s ease;
   }
 
   .home-showcase-product:hover {
     border-color: var(--color-forest);
-    box-shadow: 0 8px 24px rgba(26, 23, 20, 0.1);
   }
 
   .home-showcase-product-image {
@@ -589,7 +587,9 @@
     .focus-section-overlay,
     .focus-area-item,
     .quote-section-photo img,
-    .library-teaser-bg {
+    .library-teaser-bg,
+    .mentorship-teaser-bg,
+    .next-step-teaser-bg {
       animation: none;
     }
 
@@ -672,16 +672,65 @@
     );
   }
 
+  .mentorship-teaser {
+    background-color: var(--color-forest);
+  }
+
+  .mentorship-teaser-bg {
+    position: absolute;
+    inset: -10%;
+    width: 120%;
+    height: 120%;
+    object-fit: cover;
+    object-position: center 30%;
+    pointer-events: none;
+    animation: focusKenBurns 30s ease-in-out infinite alternate;
+  }
+
+  .mentorship-teaser-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-forest) 86%, transparent) 0%,
+      color-mix(in srgb, var(--color-forest) 58%, transparent) 52%,
+      color-mix(in srgb, var(--color-ink) 48%, transparent) 100%
+    );
+  }
+
+  .next-step-teaser {
+    background-color: var(--color-forest);
+  }
+
+  .next-step-teaser-bg {
+    position: absolute;
+    inset: -10%;
+    width: 120%;
+    height: 120%;
+    object-fit: cover;
+    object-position: center 25%;
+    pointer-events: none;
+    animation: focusKenBurns 32s ease-in-out infinite alternate;
+  }
+
+  .next-step-teaser-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-forest) 88%, transparent) 0%,
+      color-mix(in srgb, var(--color-forest) 60%, transparent) 50%,
+      color-mix(in srgb, var(--color-ink) 50%, transparent) 100%
+    );
+  }
+
   .section-break,
   .hero-section-break {
     position: relative;
     z-index: 3;
     height: 14px;
     pointer-events: none;
-    background: color-mix(in srgb, var(--color-forest) 72%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 0 18px color-mix(in srgb, var(--color-forest) 35%, transparent);
+    background: var(--color-forest);
   }
 
   .sr-only {
@@ -699,63 +748,50 @@
 
 @layer utilities {
   h1,
-  h1.font-display,
-  h1.tracking-tight {
-    font-family: var(--font-hero);
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
   h2,
   h3,
-  .font-headline {
-    font-family: var(--font-headline);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-  .font-wordmark {
-    font-family: var(--font-wordmark);
-    font-weight: 400;
-    letter-spacing: 0.01em;
-    text-transform: none;
-    line-height: 1.15;
-  }
-
-  .font-editorial {
-    font-family: var(--font-editorial);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  .font-statement {
-    font-family: var(--font-statement);
-    font-weight: 400;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
-
+  h4,
+  .font-headline,
+  .font-display,
+  .font-hero,
+  .font-wordmark,
+  .font-editorial,
+  .font-statement,
   .font-campaign,
-  h2.font-campaign,
-  h3.font-campaign {
-    font-family: var(--font-campaign);
-    font-weight: 400;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
+  .text-heading {
+    font-family: var(--font-sans);
+    font-size: var(--text-heading);
+    font-weight: 700;
+    line-height: 1.6;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .text-xs,
+  .text-sm,
+  .text-base,
+  .text-lg {
+    font-family: var(--font-sans);
+    font-size: var(--text-body) !important;
+    line-height: 1.6;
+  }
+
+  .text-xl,
+  .text-2xl,
+  .text-3xl,
+  .text-4xl,
+  .text-5xl,
+  .text-6xl,
+  .text-7xl {
+    font-family: var(--font-sans);
+    font-size: var(--text-heading) !important;
+    line-height: 1.6;
   }
 
   .campaign-hero p,
   .campaign-hero .campaign-body {
-    font-family: var(--font-roboto);
-  }
-
-  .campaign-hero h1,
-  .campaign-hero h1.font-display,
-  .campaign-hero h1.tracking-tight {
-    font-family: var(--font-campaign);
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
   }
 }

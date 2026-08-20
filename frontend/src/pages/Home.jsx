@@ -15,6 +15,12 @@ const QUOTE_IMAGE =
 const LIBRARY_IMAGE =
   'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=2000&q=80';
 
+const MENTORSHIP_IMAGE =
+  'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=2000&q=80';
+
+const NEXT_STEP_IMAGE =
+  'https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&w=2000&q=80';
+
 const focusAreas = [
   {
     title: 'Education & skills',
@@ -81,36 +87,24 @@ function HomePage() {
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/30 to-transparent" />
-        <div className="relative section-wrap w-full pb-10 pt-24 md:pb-14 md:pt-28 animate-[fadeIn_0.8s_ease-out]">
-          <h1 className="text-4xl text-paper sm:text-5xl md:text-6xl lg:text-7xl max-w-3xl">
-            Empower Her
-          </h1>
-          <p className="mt-4 max-w-xl text-base text-paper/85 leading-relaxed md:text-xl">
+        <div className="absolute inset-0 bg-ink/70" />
+        <div className="relative section-wrap w-full pb-16 pt-32 md:pb-24 md:pt-40">
+          <h1 className="text-paper max-w-xl">Empower Her</h1>
+          <p className="mt-5 max-w-md text-paper">
             Education, health, opportunity, and community — built for women advancing equality.
           </p>
-          <div className="mt-7 flex flex-wrap gap-4">
-              {isAuthenticated ? (
-                <>
-                  <Link to="/dashboard" className="btn-brass">
-                    Go to dashboard
-                  </Link>
-                  <Link to="/library" className="btn-ghost">
-                    Explore library
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link to="/register" className="btn-brass">
-                    Join the community
-                  </Link>
-                  <Link to="/resources" className="btn-ghost">
-                    Explore resources
-                  </Link>
-                </>
-              )}
-            </div>
+          <div className="mt-10">
+            {isAuthenticated ? (
+              <Link to="/dashboard" className="btn-brass">
+                Go to dashboard
+              </Link>
+            ) : (
+              <Link to="/register" className="btn-brass">
+                Join the community
+              </Link>
+            )}
           </div>
+        </div>
       </section>
 
       {/* Mission */}
@@ -118,7 +112,7 @@ function HomePage() {
         <div className="absolute inset-0">
           <GradientWaves
             horizonColor="#1b3a2f"
-            waveColor="#2d5a48"
+            waveColor="#1b3a2f"
             crestColor="#2d5a48"
             speed={0.38}
             amplitude={2.4}
@@ -139,15 +133,15 @@ function HomePage() {
             grainIntensity={0.04}
           />
         </div>
-        <div className="relative page-section pointer-events-none">
+        <div className="relative page-section-tight pointer-events-none">
           <div className="section-wrap max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brass mb-4">
+            <p className="text-paper mb-3">
               Mission
             </p>
-            <h2 className="font-display text-3xl text-paper md:text-4xl tracking-tight">
+            <h2 className="text-paper max-w-2xl">
               A platform aligned with gender equality, not slogans.
             </h2>
-            <p className="mt-6 font-inter text-lg text-paper/85 leading-relaxed">
+            <p className="mt-8 text-paper max-w-2xl">
               EmpowerHer supports UN Sustainable Development Goal 5 by connecting women with
               practical resources, mentorship, and peer networks — so progress is shared, not
               solitary.
@@ -165,20 +159,20 @@ function HomePage() {
           aria-hidden="true"
         />
         <div className="focus-section-overlay" aria-hidden="true" />
-        <div className="relative page-section">
+        <div className="relative page-section-roomy">
           <div className="section-wrap">
-            <h2 className="font-display text-3xl text-paper md:text-4xl tracking-tight mb-12">
+            <h2 className="text-paper mb-8">
               Where we focus
             </h2>
-            <ul className="grid gap-10 sm:grid-cols-2">
+            <ul className="grid gap-8 sm:grid-cols-2 sm:gap-x-16 sm:gap-y-12">
               {focusAreas.map((area, index) => (
                 <li
                   key={area.title}
                   className="focus-area-item"
                   style={{ animationDelay: `${index * 120}ms` }}
                 >
-                  <h3 className="font-display text-xl text-paper">{area.title}</h3>
-                  <p className="mt-3 text-paper/80 leading-relaxed">{area.body}</p>
+                  <h3 className="text-paper">{area.title}</h3>
+                  <p className="mt-2 text-paper">{area.body}</p>
                 </li>
               ))}
             </ul>
@@ -193,27 +187,27 @@ function HomePage() {
             <img src={QUOTE_IMAGE} alt="Black women from Ghana, smiling together" />
           </div>
           <div className="quote-section-copy">
-            <blockquote className="font-editorial text-2xl text-forest leading-snug italic md:text-3xl">
+            <blockquote className="text-forest">
               “We need to reshape our own perception of how we view ourselves. We have to step up
               as women and take the lead.”
             </blockquote>
-            <p className="mt-6 text-sm text-ink-muted">— Beyoncé Knowles-Carter</p>
+            <p className="mt-8 text-ink-muted">— Beyoncé Knowles-Carter</p>
           </div>
         </div>
       </section>
 
       {/* Featured */}
-      <section className="page-section">
+      <section className="page-section-tight">
         <div className="section-wrap">
-          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
+          <div className="mb-8 flex flex-col gap-3 md:mb-14 md:flex-row md:items-end md:justify-between">
+            <h2 className="text-forest">
               Voices that lead
             </h2>
-            <Link to="/gallery" className="link-brass text-sm font-medium">
+            <Link to="/gallery" className="link-brass">
               View the gallery
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
+          <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-10">
             {featured.map((person) => (
               <figure key={person.name} className="group">
                 <div className="overflow-hidden">
@@ -243,15 +237,15 @@ function HomePage() {
         />
         <div className="library-teaser-overlay" aria-hidden="true" />
         <div className="relative page-section">
-          <div className="section-wrap flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div className="section-wrap flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
             <div className="max-w-xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brass mb-4">
+              <p className="text-brass mb-3">
                 Women&apos;s Library
               </p>
-              <h2 className="font-campaign text-3xl md:text-4xl">
+              <h2>
                 Read what great women wrote
               </h2>
-              <p className="mt-4 text-paper/80 leading-relaxed campaign-body">
+              <p className="mt-5 text-paper">
                 Browse books and journals with summaries, quotes, and links — memoirs, activism,
                 leadership, and more.
               </p>
@@ -264,16 +258,16 @@ function HomePage() {
       </section>
 
       {/* Events teaser */}
-      <section className="page-section border-b border-line">
-        <div className="section-wrap flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+      <section className="page-section-roomy border-b border-line">
+        <div className="section-wrap flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
           <div className="max-w-xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brass mb-4">
+            <p className="text-brass mb-3">
               Events &amp; workshops
             </p>
-            <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
+            <h2 className="text-forest">
               Learn and connect in person or online
             </h2>
-            <p className="mt-4 text-ink-muted leading-relaxed">
+            <p className="mt-5 text-ink-muted">
               Workshops, webinars, panels, and meetups — RSVP to save your spot.
             </p>
           </div>
@@ -284,67 +278,75 @@ function HomePage() {
       </section>
 
       {/* Mentorship teaser */}
-      <section className="page-section border-b border-line bg-paper-dark/40">
-        <div className="section-wrap flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brass mb-4">
-              Mentorship
-            </p>
-            <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
-              Find a mentor — or become one
-            </h2>
-            <p className="mt-4 text-ink-muted leading-relaxed">
-              Connect with women who share your interests in career, leadership, and community.
-            </p>
+      <section className="mentorship-teaser relative overflow-hidden text-paper">
+        <img
+          src={MENTORSHIP_IMAGE}
+          alt=""
+          className="mentorship-teaser-bg"
+          aria-hidden="true"
+        />
+        <div className="mentorship-teaser-overlay" aria-hidden="true" />
+        <div className="relative page-section-tight">
+          <div className="section-wrap flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-xl">
+              <p className="text-brass mb-3">
+                Mentorship
+              </p>
+              <h2>
+                Find a mentor — or become one
+              </h2>
+              <p className="mt-5 text-paper">
+                Connect with women who share your interests in career, leadership, and community.
+              </p>
+            </div>
+            <Link to="/mentorship" className="btn-brass shrink-0">
+              Explore mentorship
+            </Link>
           </div>
-          <Link to="/mentorship" className="btn-outline shrink-0">
-            Explore mentorship
-          </Link>
         </div>
       </section>
 
       {/* Community teaser */}
       <section className="page-section border-b border-line">
-        <div className="section-wrap flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+        <div className="section-wrap flex flex-col gap-12 md:flex-row md:items-end md:justify-between">
           <div className="max-w-xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brass mb-4">
+            <p className="text-brass mb-3">
               Community
             </p>
-            <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
+            <h2 className="text-forest">
               Join the conversation
             </h2>
-            <p className="mt-4 text-ink-muted leading-relaxed">
+            <p className="mt-5 text-ink-muted">
               Share stories, ask questions, and support other women in the EmpowerHer community.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Link to="/community" className="btn-primary shrink-0">
-              Open community
-            </Link>
-            <Link to="/search" className="btn-outline shrink-0">
-              Search the site
-            </Link>
-          </div>
+          <Link to="/community" className="btn-primary shrink-0">
+            Open community
+          </Link>
         </div>
       </section>
 
       {/* Closing CTA */}
-      <section className="page-section">
-        <div className="section-wrap flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-xl">
-            <h2 className="font-display text-3xl text-forest md:text-4xl tracking-tight">
-              Find your next step
-            </h2>
-            <p className="mt-4 text-ink-muted leading-relaxed">
-              Browse curated resources or learn how EmpowerHer works — then join when you are ready.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link to="/resources" className="btn-primary">
+      <section className="next-step-teaser relative overflow-hidden text-paper">
+        <img
+          src={NEXT_STEP_IMAGE}
+          alt=""
+          className="next-step-teaser-bg"
+          aria-hidden="true"
+        />
+        <div className="next-step-teaser-overlay" aria-hidden="true" />
+        <div className="relative page-section-roomy">
+          <div className="section-wrap flex flex-col gap-9 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-xl">
+              <h2>
+                Find your next step
+              </h2>
+              <p className="mt-5 text-paper">
+                Browse curated resources or learn how EmpowerHer works — then join when you are ready.
+              </p>
+            </div>
+            <Link to="/resources" className="btn-brass">
               Browse resources
-            </Link>
-            <Link to="/about" className="btn-outline">
-              About the project
             </Link>
           </div>
         </div>

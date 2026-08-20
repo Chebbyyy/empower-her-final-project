@@ -63,7 +63,7 @@ function SiteHeader() {
       },
       {
         label: 'Connect',
-        bgColor: '#2d5a48',
+        bgColor: '#1a1714',
         textColor: '#f7f4ef',
         links: [
           { label: 'Events', href: '/events', ariaLabel: 'Events and workshops' },
@@ -74,8 +74,8 @@ function SiteHeader() {
       },
       {
         label: isAuthenticated ? user?.name?.split(' ')[0] || 'Account' : 'Account',
-        bgColor: '#8b6540',
-        textColor: '#f7f4ef',
+        bgColor: '#a67c52',
+        textColor: '#1a1714',
         links: isAuthenticated
           ? [{ label: 'Search', href: '/search', ariaLabel: 'Search Empower Her' }, ...accountLinks]
           : accountLinks,
@@ -86,9 +86,10 @@ function SiteHeader() {
   return (
     <header className="site-header">
       <CardNav
+        logo="/logo.svg"
         logoAlt="Empower Her"
         items={items}
-        baseColor="transparent"
+        baseColor="#f7f4ef"
         menuColor="#1b3a2f"
         buttonBgColor="#1b3a2f"
         buttonTextColor="#f7f4ef"

@@ -4,8 +4,9 @@
   left: 0;
   right: 0;
   z-index: 50;
-  background: transparent;
-  padding: 0.7rem 0 0;
+  background: var(--color-paper);
+  border-bottom: 1px solid var(--color-line);
+  padding: var(--space-3) 0;
   pointer-events: none;
 }
 
@@ -15,8 +16,9 @@
 
 .card-nav-container {
   position: relative;
-  width: min(94%, 920px);
+  width: min(100%, 72rem);
   margin: 0 auto;
+  padding-inline: var(--space-5);
   z-index: 99;
   box-sizing: border-box;
 }
@@ -29,21 +31,16 @@
   padding: 0;
   margin: 0;
   cursor: pointer;
-  background: rgba(26, 23, 20, 0.42);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: color-mix(in srgb, var(--color-ink) 45%, transparent);
 }
 
 .card-nav {
   display: block;
   height: 48px;
   padding: 0;
-  background-color: rgba(247, 244, 239, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(247, 244, 239, 0.55);
-  border-radius: 0.85rem;
-  box-shadow: 0 8px 24px rgba(26, 23, 20, 0.12);
+  background-color: var(--color-paper);
+  border: 0;
+  border-radius: 0;
   position: relative;
   z-index: 1;
   overflow: hidden;
@@ -59,7 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.35rem 0.4rem 0.35rem 1rem;
+  padding: 0 var(--space-2) 0 0;
   z-index: 2;
 }
 
@@ -72,7 +69,6 @@
   justify-content: center;
   cursor: pointer;
   gap: 5px;
-  border-radius: 0.5rem;
 }
 
 .hamburger-menu:hover .hamburger-line,
@@ -107,32 +103,43 @@
   transform: translate(-50%, -50%);
 }
 
+.card-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+}
+
 .logo {
-  height: 28px;
+  height: 30px;
+  width: 30px;
+  display: block;
+  flex-shrink: 0;
+  border-radius: 0.45rem;
 }
 
 .card-nav-wordmark {
-  font-family: var(--font-wordmark, cursive);
-  font-size: 1.5rem;
-  color: #1b3a2f;
-  line-height: 1;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 700;
+  color: var(--color-forest);
+  line-height: 1.6;
   white-space: nowrap;
   text-decoration: none;
 }
 
 .card-nav-cta-button {
-  background-color: #1b3a2f;
-  color: #f7f4ef;
-  border: none;
-  border-radius: 0.55rem;
-  padding: 0 1.1rem;
+  background-color: var(--color-forest);
+  color: var(--color-paper);
+  border: 1px solid var(--color-forest);
+  padding: 0 var(--space-5);
   height: 100%;
-  font-family: var(--font-support, sans-serif);
+  font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 0.02em;
+  font-size: var(--text-body);
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -140,7 +147,8 @@
 }
 
 .card-nav-cta-button:hover {
-  background-color: #2d5a48;
+  background-color: var(--color-ink);
+  border-color: var(--color-ink);
 }
 
 .card-nav-content {
@@ -149,18 +157,19 @@
   right: 0;
   top: 48px;
   bottom: 0;
-  padding: 0.55rem;
+  padding: var(--space-3) 0 var(--space-4);
   display: flex;
   align-items: stretch;
-  gap: 10px;
+  gap: var(--space-5);
   visibility: hidden;
   pointer-events: none;
   z-index: 1;
 }
 
 .card-nav.open {
-  background-color: rgba(247, 244, 239, 0.97);
-  box-shadow: 0 18px 50px rgba(26, 23, 20, 0.22);
+  background-color: var(--color-paper);
+  border-top: 1px solid var(--color-line);
+  overflow: hidden;
 }
 
 .card-nav.open .card-nav-content {
@@ -168,59 +177,61 @@
   pointer-events: auto;
 }
 
+.card-nav.open .nav-card {
+  overflow: visible;
+}
+
 .nav-card {
   flex: 1 1 0;
   min-width: 0;
-  border-radius: 0.7rem;
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 14px 16px 12px;
-  gap: 8px;
+  padding: var(--space-4) var(--space-3) var(--space-3);
+  gap: var(--space-2);
   user-select: none;
 }
 
 .nav-card-label {
-  font-family: var(--font-headline, sans-serif);
+  font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  opacity: 0.72;
+  font-size: var(--text-body);
+  line-height: 1.6;
 }
 
 .nav-card-links {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-1);
 }
 
 .nav-card-link {
-  font-family: var(--font-support, sans-serif);
-  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
   font-weight: 600;
+  line-height: 1.6;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
   background: none;
   border: none;
-  padding: 0.42rem 0.5rem;
-  margin-inline: -0.5rem;
-  border-radius: 0.45rem;
-  transition: background-color 0.2s ease, transform 0.15s ease;
+  padding: var(--space-2) 0;
+  margin: 0;
+  transition: opacity 0.2s ease;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   text-align: left;
 }
 
 .nav-card-link:hover,
 .nav-card-link:focus-visible {
-  background-color: color-mix(in srgb, #f7f4ef 16%, transparent);
+  opacity: 0.75;
 }
 
 .nav-card-link.is-active {
-  background-color: color-mix(in srgb, #f7f4ef 22%, transparent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .nav-card-link-icon {
@@ -230,11 +241,7 @@
 
 @media (max-width: 768px) {
   .card-nav-container {
-    width: min(94%, 480px);
-  }
-
-  .card-nav-top {
-    padding: 0.35rem 0.45rem 0.35rem 1rem;
+    width: 100%;
   }
 
   .hamburger-menu {
@@ -251,15 +258,11 @@
     display: none;
   }
 
-  .card-nav-wordmark {
-    font-size: 1.4rem;
-  }
-
   .card-nav-content {
     flex-direction: column;
     align-items: stretch;
-    gap: 8px;
-    padding: 0.45rem 0.5rem 0.55rem;
+    gap: var(--space-4);
+    padding: var(--space-4) 0 var(--space-5);
     overflow-y: auto;
     overscroll-behavior: contain;
   }
@@ -267,17 +270,7 @@
   .nav-card {
     height: auto;
     flex: 0 0 auto;
-    padding: 10px 12px;
-    gap: 4px;
-  }
-
-  .nav-card-label {
-    font-size: 0.72rem;
-    margin-bottom: 2px;
-  }
-
-  .nav-card-link {
-    font-size: 0.92rem;
-    padding: 0.38rem 0.45rem;
+    padding: var(--space-3) 0;
+    gap: var(--space-1);
   }
 }

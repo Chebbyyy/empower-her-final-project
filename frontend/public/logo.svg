@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Empower Her">
+  <rect width="64" height="64" rx="16" fill="#1b3a2f"/>
+  <path
+    fill="#a67c52"
+    d="M32 12c.6 9.2-5.4 15.4-14 19.2 8.8 1.6 14.2 7.6 14 18.8-.2-11.2 5.2-17.2 14-18.8C37.4 27.4 31.4 21.2 32 12Z"
+  />
+  <path
+    fill="#f7f4ef"
+    d="M20 46.5c3.4-3.2 7.6-4.8 12-4.8s8.6 1.6 12 4.8c-3.6 2.2-7.6 3.3-12 3.3s-8.4-1.1-12-3.3Z"
+  />
+</svg>

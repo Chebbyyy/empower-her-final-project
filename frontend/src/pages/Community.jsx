@@ -148,7 +148,7 @@ function Community() {
         </section>
       )}
 
-      <section className="sticky top-16 z-30 border-b border-line bg-paper/95 backdrop-blur-sm">
+      <section className="sticky top-16 z-30 border-b border-line bg-paper">
         <div className="section-wrap py-4 flex flex-wrap gap-2">
           {TOPICS.map((t) => (
             <button
